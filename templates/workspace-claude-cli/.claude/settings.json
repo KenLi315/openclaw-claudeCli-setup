@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "openclaw system event --text 'Claude CLI 任務已完成' --mode now"
+          }
+        ]
+      }
+    ]
+  }
+}

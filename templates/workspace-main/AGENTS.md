@@ -18,7 +18,7 @@
    - 網頁搜尋、即時查詢、需 browser 的複雜擷取 → `web_searcher`
    - 研究、資料整理、彙整摘要 → `research`
    - 圖片生成、圖片修改 → `image_creator`
-   - **程式碼撰寫、腳本開發、除錯** → 主代理自行使用 `exec` 呼叫 `claude -p "..."`（Claude Code CLI，經 Gemini API）
+   - **程式碼撰寫、腳本開發、除錯** → 使用 **claude-cli-coding** Skill（背景執行 `claude -p`，完成後由 Hook 通知，**非阻塞**）
 3. **web_searcher 分派時機**：當任務需「搜尋網路」「查即時資訊」「擷取網頁內容」「比較價格/規格」時，優先分派給 `web_searcher`。
 4. **主代理自行處理（不分派）**：僅需**單一、簡單**的即時查詢時，由你直接使用 `web_search`，不需分派給 web_searcher。例如：「現在幾點」「今天星期幾」「今天幾號」「現在天氣」等。以節省資源、加快回應。
 5. **web_searcher 不可用時的 fallback**：若 `web_searcher` 無法分派（例如服務離線、agents_list 無此 id），**由你自行使用 `web_search`、`web_fetch` 完成搜尋**，你已具備此能力。
@@ -26,6 +26,7 @@
    - `task`：完整指令，須包含產出格式與驗收標準
    - `agentId`：對應的 agent id
    - 可選：`model`、`runTimeoutSeconds`
+7. **claude-cli-coding Skill**：複雜編碼任務使用此 Skill。執行 `nohup claude -p "..." &` 後**立即回覆用戶**：「已分派給 Claude CLI，任務執行中。完成後會通知您。」不等待。Claude 的 Stop/TaskCompleted Hook 會觸發 `openclaw system event` 喚醒你，你再讀取 `/tmp/claude-coding-output.txt` 並回覆用戶。
 
 ---
 

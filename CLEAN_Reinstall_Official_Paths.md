@@ -56,7 +56,7 @@ cp templates/workspace-main/AGENTS.md ~/.openclaw/workspace-main/
 cp templates/workspace-main/USER.md ~/.openclaw/workspace-main/
 ```
 
-### 3.3 子代理（workspace-research、workspace-shared）
+### 3.3 子代理（workspace-research、workspace-image-creator、workspace-claude-cli）
 
 ```bash
 cp templates/workspace-research/AGENTS.md ~/.openclaw/workspace-research/
