@@ -1,0 +1,30 @@
+{
+  "gateway": {"bind": "loopback", "port": 18789},
+  "browser": {
+    "enabled": true,
+    "attachOnly": true,
+    "defaultProfile": "remote",
+    "profiles": {
+      "remote": {
+        "cdpUrl": "http://openclaw-sandbox-browser:9222",
+        "color": "#FF4500"
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "workspace": "~/.openclaw/workspace",
+      "model": {"primary": "google/gemini-3-flash", "fallbacks": ["google/gemini-2.0-flash", "google/gemini-1.5-flash"]},
+      "subagents": {"maxSpawnDepth": 2, "maxChildrenPerAgent": 5, "maxConcurrent": 8, "runTimeoutSeconds": 900, "archiveAfterMinutes": 60, "model": "google/gemini-3-flash", "thinking": "low"},
+      "sandbox": {"mode": "non-main", "scope": "agent"}
+    },
+    "list": [
+      {"id": "main", "default": true, "name": "????????", "workspace": "~/.openclaw/workspace-main", "sandbox": {"mode": "off"}, "tools": {"allow": ["read", "write", "exec", "web_search", "web_fetch"]}},
+      {"id": "research", "name": "?????", "workspace": "~/.openclaw/workspace-research", "sandbox": {"mode": "non-main"}},
+      {"id": "image_creator", "name": "?????", "workspace": "~/.openclaw/workspace-image-creator", "sandbox": {"mode": "non-main"}},
+      {"id": "web_searcher", "name": "???????", "workspace": "~/.openclaw/workspace-web-searcher", "sandbox": {"mode": "off"}, "tools": {"allow": ["web_search", "web_fetch", "browser"]}}
+    ]
+  },
+  "tools": {"profile": "coding", "web": {"search": {"provider": "gemini", "gemini": {"model": "gemini-2.5-flash"}}}, "subagents": {"tools": {"deny": ["gateway", "cron"]}}},
+  "channels": {"telegram": {"enabled": true, "dmPolicy": "pairing"}}
+}
