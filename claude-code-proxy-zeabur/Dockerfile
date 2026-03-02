@@ -7,5 +7,11 @@ USER root
 RUN npm install -g @anthropic-ai/claude-code
 USER node
 
+# 繞過 Claude Code 登入檢查（使用 proxy 時不需 Anthropic 帳號）
+USER root
+RUN echo '{"hasCompletedOnboarding": true}' > /root/.claude.json && \
+    mkdir -p /home/node/.claude && echo '{"hasCompletedOnboarding": true}' > /home/node/.claude.json
+USER node
+
 # 注意：ANTHROPIC_BASE_URL 與 proxy 連線需在 Zeabur 環境變數設定
 # 例如：ANTHROPIC_BASE_URL=http://claude-code-proxy.zeabur.internal:8082
