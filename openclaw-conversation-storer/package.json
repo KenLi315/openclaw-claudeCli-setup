@@ -1,0 +1,15 @@
+{
+  "name": "openclaw-conversation-storer",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "OpenClaw conversation storer — receives user + assistant messages from hooks, writes to MongoDB",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "mongodb": "^6.3.0"
+  }
+}
